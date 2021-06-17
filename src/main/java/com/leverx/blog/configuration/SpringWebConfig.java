@@ -15,11 +15,11 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 @Configuration
 @ComponentScan("com.leverx.blog.controller")
 @EnableWebMvc
-public class SpringConfig implements WebMvcConfigurer {
+public class SpringWebConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
 
     @Autowired
-    public SpringConfig(ApplicationContext applicationContext) {
+    public SpringWebConfig(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 

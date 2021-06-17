@@ -26,16 +26,38 @@ create table `article` (
 );
 
 create table `article_unit` (
+                            `id` INTEGER NOT NULL AUTO_INCREMENT,
                             `author_id` INTEGER,
                             `article_id` INTEGER,
 
+                            PRIMARY KEY (`id`),
                             FOREIGN KEY (`author_id`) REFERENCES `user`(`id`),
                             FOREIGN KEY (`article_id`) REFERENCES `article`(`id`)
 );
 
 create table `tag` (
-                       `article_id` INTEGER,
+                       `id` INTEGER NOT NULL AUTO_INCREMENT,
                        `value` ENUM('PROGRAMMING', 'LIFESTYLE', 'JOB', 'HOME'),
 
-                       FOREIGN KEY (`article_id`) REFERENCES `article`(`id`)
+                       PRIMARY KEY (`id`)
+);
+
+create table `each_tag` (
+                        `id` INTEGER NOT NULL AUTO_INCREMENT,
+                        `article_id` INTEGER,
+
+                        primary key (`id`),
+                        FOREIGN KEY (`article_id`) references `article`(`id`)
+);
+
+create table `comment` (
+                    `id` INTEGER NOT NULL AUTO_INCREMENT,
+                    `message` TEXT NOT NULL,
+                    `post_id` INTEGER,
+                    `author_id` INTEGER,
+                    `created_at` DATE NOT NULL,
+
+                    PRIMARY KEY (`id`),
+                    FOREIGN KEY (`post_id`) references `article`(`id`),
+                    foreign key (`author_id`) references `user`(`id`)
 );

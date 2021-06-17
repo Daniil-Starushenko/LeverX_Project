@@ -1,6 +1,6 @@
 package com.leverx.blog.configuration.initializer;
 
-import com.leverx.blog.configuration.SpringConfig;
+import com.leverx.blog.configuration.SpringWebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 
@@ -14,7 +14,7 @@ public class WebAppInitializer
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] {SpringConfig.class};
+        return new Class[] {SpringWebConfig.class};
     }
 
     @Override
