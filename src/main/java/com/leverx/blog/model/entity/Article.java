@@ -1,10 +1,11 @@
-package com.leverx.blog.entity;
+package com.leverx.blog.model.entity;
 
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "article")
@@ -33,7 +34,7 @@ public class Article {
     private LocalDate changingDate;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "article")
-    private List<Comment> comments;
+    private Set<Comment> comments;
 
     @ManyToMany()
     @JoinTable(name = "each_tag",

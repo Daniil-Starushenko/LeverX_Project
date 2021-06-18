@@ -1,11 +1,14 @@
-package com.leverx.blog.entity;
+package com.leverx.blog.model.entity;
+
+import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
+@Data
 public class User {
     @Id
     @Column(name = "id")
@@ -28,10 +31,10 @@ public class User {
     private LocalDate registrationDate;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
-    private List<Comment> comments;
+    private Set<Comment> comments;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
-    private List<Article> articles;
+    private Set<Article> articles;
 
     @PrePersist
     public void setRegistrationDate() {

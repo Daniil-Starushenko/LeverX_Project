@@ -1,4 +1,4 @@
-package com.leverx.blog.entity;
+package com.leverx.blog.model.entity;
 
 import lombok.Data;
 

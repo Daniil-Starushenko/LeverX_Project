@@ -1,9 +1,9 @@
-package com.leverx.blog.entity;
+package com.leverx.blog.model.entity;
 
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tag")
@@ -19,7 +19,7 @@ public class Tag {
 
     @ManyToMany
     @JoinTable(name = "each_tag",
-        joinColumns = @JoinColumn(name = "tag_id"),
-        inverseJoinColumns = @JoinColumn(name = "article_id"))
-    private List<Article> articles;
+            joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "article_id"))
+    private Set<Article> articles;
 }

@@ -1,5 +1,6 @@
 package com.leverx.blog.configuration;
 
+import com.leverx.blog.repository.mysql.MySqlRepositoriesBasePackageMarker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -18,6 +20,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
+@EnableJpaRepositories(basePackageClasses = MySqlRepositoriesBasePackageMarker.class)
 public class HibernateConfig {
     private Environment environment;
 
@@ -30,7 +33,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("com.leverx.blog.entity");
+        sessionFactory.setPackagesToScan("com.leverx.blog.model.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
