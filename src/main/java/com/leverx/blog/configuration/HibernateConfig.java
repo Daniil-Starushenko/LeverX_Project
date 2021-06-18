@@ -12,15 +12,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableTransactionManagement
 @PropertySource("classpath:application.properties")
-@EnableJpaRepositories(basePackageClasses = MySqlRepositoriesBasePackageMarker.class)
 public class HibernateConfig {
     private Environment environment;
 
@@ -30,19 +31,14 @@ public class HibernateConfig {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("com.leverx.blog.model.entity");
-        sessionFactory.setHibernateProperties(hibernateProperties());
-        return sessionFactory;
-    }
-
-    @Bean
-    public HibernateTransactionManager transactionManager() {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory().getObject());
-        return transactionManager;
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+        LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
+        entityManager.setDataSource(dataSource());
+        entityManager.setPackagesToScan("com.leverx.blog.model");
+        entityManager.setJpaVendorAdapter(jpaVendorAdapter);
+        entityManager.setJpaProperties(hibernateProperties());
+        return entityManager;
     }
 
     private Properties hibernateProperties() {

@@ -8,13 +8,15 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
+import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
+
 @Data
 @Builder
 public class ApiExceptionDto {
 
     private HttpStatus status;
     private String message;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.mm.YYYY hh:mm:ss")
+    @JsonFormat(shape = STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
 
     public static ApiExceptionDto of(ApiException ex) {

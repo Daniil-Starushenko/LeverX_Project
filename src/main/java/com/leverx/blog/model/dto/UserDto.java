@@ -6,6 +6,8 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.util.Set;
 
+import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
+
 @Data
 public class UserDto {
     private Integer id;
@@ -13,7 +15,7 @@ public class UserDto {
     private String lastName;
     private String password;
     private String email;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.mm.YYYY")
+    @JsonFormat(shape = STRING, pattern = "dd-MM-yyyy")
     private LocalDate registrationDate;
     private Set<CommentDto> comments;
     private Set<ArticleDto> articles;

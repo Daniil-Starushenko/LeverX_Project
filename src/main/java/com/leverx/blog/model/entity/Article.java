@@ -24,6 +24,7 @@ public class Article {
     @Column(name = "status")
     private Status status;
 
+    @JoinColumn(name = "author_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
@@ -36,11 +37,11 @@ public class Article {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "article")
     private Set<Comment> comments;
 
-    @ManyToMany()
+    @ManyToMany
     @JoinTable(name = "each_tag",
         joinColumns = @JoinColumn(name = "article_id"),
         inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private List<Tag> tags;
+    private Set<Tag> tags;
 
     @PrePersist
     public void setCreationDate() {

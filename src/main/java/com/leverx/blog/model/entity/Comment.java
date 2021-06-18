@@ -16,9 +16,11 @@ public class Comment {
     @Column(name = "message")
     private String message;
 
+    @JoinColumn(name = "author_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @JoinColumn(name = "post_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Article article;
 

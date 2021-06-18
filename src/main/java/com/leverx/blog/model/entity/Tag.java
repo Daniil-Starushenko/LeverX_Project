@@ -17,9 +17,6 @@ public class Tag {
     @Column(name = "value")
     private TagValue tagValue;
 
-    @ManyToMany
-    @JoinTable(name = "each_tag",
-            joinColumns = @JoinColumn(name = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "article_id"))
+    @ManyToMany(mappedBy = "tags")
     private Set<Article> articles;
 }

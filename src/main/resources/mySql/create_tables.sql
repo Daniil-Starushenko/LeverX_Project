@@ -43,11 +43,9 @@ create table `tag` (
 );
 
 create table `each_tag` (
-                        `id` INTEGER NOT NULL AUTO_INCREMENT,
                         `tag_id` INTEGER,
                         `article_id` INTEGER,
 
-                        primary key (`id`),
                         FOREIGN KEY (`tag_id`) references `tag`(`id`),
                         FOREIGN KEY (`article_id`) references `article`(`id`)
 );

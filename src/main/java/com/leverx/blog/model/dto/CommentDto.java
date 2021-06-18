@@ -12,6 +12,6 @@ public class CommentDto {
     private String message;
     private UserDto user;
     private ArticleDto article;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.mm.YYYY")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-mm-yyyy")
     private LocalDate created;
 }
