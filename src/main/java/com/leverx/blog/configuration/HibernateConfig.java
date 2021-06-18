@@ -16,14 +16,10 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "com.leverx.blog")
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 public class HibernateConfig {
     private Environment environment;
-
-    @Value("${entitymanager.packagesToScan}")
-    private String entityManagerPackageToScan;
 
     @Autowired
     public void setEnvironment(Environment environment) {
@@ -34,7 +30,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(entityManagerPackageToScan);
+        sessionFactory.setPackagesToScan("com.leverx.blog.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

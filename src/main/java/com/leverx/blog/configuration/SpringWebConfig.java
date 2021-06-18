@@ -1,5 +1,6 @@
 package com.leverx.blog.configuration;
 
+import com.leverx.blog.BasePackageMarker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,7 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @Configuration
-@ComponentScan("com.leverx.blog.controller")
+@ComponentScan(basePackageClasses = BasePackageMarker.class)
 @EnableWebMvc
 public class SpringWebConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;

@@ -1,11 +1,14 @@
 package com.leverx.blog.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "article")
+@Data
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,72 +35,19 @@ public class Article {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "article")
     private List<Comment> comments;
 
-    public Integer getId() {
-        return id;
+    @ManyToMany()
+    @JoinTable(name = "each_tag",
+        joinColumns = @JoinColumn(name = "article_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private List<Tag> tags;
+
+    @PrePersist
+    public void setCreationDate() {
+        this.creationDate = LocalDate.now();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public LocalDate getChangingDate() {
-        return changingDate;
-    }
-
-    public void setChangingDate(LocalDate changingDate) {
-        this.changingDate = changingDate;
-    }
-
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", text='" + text + '\'' +
-                ", status=" + status +
-                ", user=" + user +
-                ", creationDate=" + creationDate +
-                ", changingDate=" + changingDate +
-                '}';
+    @PreUpdate
+    public void setChangingDate() {
+        this.changingDate = LocalDate.now();
     }
 }
