@@ -25,8 +25,6 @@ public class Comment {
     @Column(name = "created_at")
     private LocalDate created;
 
-    public Comment() {}
-
     @PrePersist
     public void setCreated() {
         this.created = LocalDate.now();

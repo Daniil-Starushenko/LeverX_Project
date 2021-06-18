@@ -33,8 +33,6 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private List<Article> articles;
 
-    public User() {}
-
     @PrePersist
     public void setRegistrationDate() {
         this.registrationDate = LocalDate.now();

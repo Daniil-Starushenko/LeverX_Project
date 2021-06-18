@@ -22,6 +22,4 @@ public class Tag {
         joinColumns = @JoinColumn(name = "tag_id"),
         inverseJoinColumns = @JoinColumn(name = "article_id"))
     private List<Article> articles;
-
-    public Tag() {}
 }
