@@ -19,6 +19,9 @@ public class UserServiceImpl implements UserService {
     private ModelMapper modelMapper;
     private UserRepository userRepository;
 
+/**
+* Optional type for throwing exception with null returning
+*/
     @Override
     @Transactional(readOnly = true)
     public UserDto getUser(Integer id) {
