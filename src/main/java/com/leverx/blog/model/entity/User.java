@@ -27,6 +27,9 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "status")
+    private UserStatus userStatus;
+
     @Column(name = "registration_date")
     private LocalDate registrationDate;
 

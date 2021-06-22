@@ -4,6 +4,7 @@ import com.leverx.blog.model.dto.UserDto;
 import com.leverx.blog.model.entity.User;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.List;

@@ -3,7 +3,6 @@ package com.leverx.blog.security;
 import com.leverx.blog.repository.mysql.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +24,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return userRepository.findUserByEmail(email)
                 .map(user -> User.withUsername(user.getEmail())
                         .password(user.getPassword())
-//                        .authorities(new SimpleGrantedAuthority("user").getAuthority())
                         .accountExpired(false)
                         .accountLocked(false)
                         .credentialsExpired(false)

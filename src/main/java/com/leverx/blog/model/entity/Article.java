@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,7 +21,7 @@ public class Article {
     private String text;
 
     @Column(name = "status")
-    private Status status;
+    private ArticleStatus status;
 
     @JoinColumn(name = "author_id")
     @ManyToOne(fetch = FetchType.LAZY)

@@ -5,8 +5,10 @@ create table `user` (
                         `last_name` VARCHAR(255) NOT NULL,
                         `password` VARCHAR(255) NOT NULL,
                         `email` varchar(255) NOT NULL,
+                        `status` enum ('ACTIVATED', 'WAIT_ACTIVATING') not null,
                         `registration_date` DATE NOT NULL ,
 
+                        UNIQUE (email),
                         PRIMARY KEY(`id`),
                         UNIQUE (id)
 );
