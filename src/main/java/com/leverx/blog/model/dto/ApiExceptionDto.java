@@ -14,7 +14,7 @@ import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 @Builder
 public class ApiExceptionDto {
 
-    private HttpStatus status;
+    private Enum<?> status;
     private String message;
     @JsonFormat(shape = STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;

@@ -181,8 +181,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiErrorDto);
     }
 
+    //TODO check
     private ResponseEntity<Object> buildResponseEntity(ApiExceptionDto  apiErrorDto) {
-        return ResponseEntity.status(apiErrorDto.getStatus())
+        return ResponseEntity.status((HttpStatus) apiErrorDto.getStatus())
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(apiErrorDto);
     }
