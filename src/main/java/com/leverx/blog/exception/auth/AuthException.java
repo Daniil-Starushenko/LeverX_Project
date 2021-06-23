@@ -1,11 +1,11 @@
 package com.leverx.blog.exception.auth;
 
 import com.leverx.blog.exception.ApiException;
-import com.leverx.blog.exception.errorcodes.AuthErrorCodes;
+import org.springframework.http.HttpStatus;
 
 public class AuthException extends ApiException {
 
-    public AuthException(AuthErrorCodes errorCode, String message) {
+    public AuthException(HttpStatus errorCode, String message) {
         super(errorCode, message);
     }
 

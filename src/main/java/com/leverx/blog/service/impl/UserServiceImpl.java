@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
 
-
 /**
 * Optional type for throwing exception with null returning
 */

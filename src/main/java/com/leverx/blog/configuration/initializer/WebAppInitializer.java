@@ -1,9 +1,10 @@
 package com.leverx.blog.configuration.initializer;
 
 import com.leverx.blog.configuration.SpringWebConfig;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-
+@Order(1)
 public class WebAppInitializer
         extends AbstractAnnotationConfigDispatcherServletInitializer {
 

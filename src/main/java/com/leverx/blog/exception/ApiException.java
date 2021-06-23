@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 @Getter
 public abstract class ApiException extends RuntimeException {
 
-    private Enum<?> status;
+    HttpStatus status;
     private LocalDateTime timestamp;
 
-    public ApiException(Enum<?> errorCode, String message) {
+    public ApiException(HttpStatus errorCode, String message) {
         super(message);
         this.status = errorCode;
         this.timestamp = LocalDateTime.now();

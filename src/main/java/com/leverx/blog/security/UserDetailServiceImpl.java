@@ -1,6 +1,7 @@
 package com.leverx.blog.security;
 
 import com.leverx.blog.repository.mysql.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class UserDetailServiceImpl implements UserDetailsService {
 
-    @Autowired
     private UserRepository userRepository;
 
     @Override
