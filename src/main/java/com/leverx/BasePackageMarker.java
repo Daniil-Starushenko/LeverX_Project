@@ -1,4 +1,4 @@
-package com.leverx.blog;
+package com.leverx;
 
 public interface BasePackageMarker {
     //NOP

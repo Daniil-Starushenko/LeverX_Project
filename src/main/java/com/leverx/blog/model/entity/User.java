@@ -28,6 +28,7 @@ public class User {
     private String email;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
     @Column(name = "registration_date")
@@ -40,7 +41,9 @@ public class User {
     private Set<Article> articles;
 
     @PrePersist
-    public void setRegistrationDate() {
+    public void init() {
         this.registrationDate = LocalDate.now();
+        this.userStatus = UserStatus.WAIT_ACTIVATING;
     }
+
 }

@@ -13,8 +13,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 
 @Configuration
 @PropertySource("classpath:application.properties")
-@EnableRedisRepositories(basePackageClasses = RedisPackageMarker.class,
-        enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP)
+@EnableRedisRepositories(basePackageClasses = RedisPackageMarker.class)
 public class RedisConfig {
 
     @Value("${redis.hostname}")
