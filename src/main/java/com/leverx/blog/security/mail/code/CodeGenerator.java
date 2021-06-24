@@ -1,7 +1,10 @@
 package com.leverx.blog.security.mail.code;
 
+import org.springframework.stereotype.Component;
+
 import java.util.UUID;
 
+@Component
 public class CodeGenerator {
 
     private String code;
