@@ -5,6 +5,7 @@ import com.leverx.blog.exception.EntityNotFoundException;
 import com.leverx.blog.model.dto.UserDto;
 import com.leverx.blog.model.entity.User;
 import com.leverx.blog.repository.mysql.UserRepository;
+import com.leverx.blog.security.mail.EmailBuilder;
 import com.leverx.blog.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

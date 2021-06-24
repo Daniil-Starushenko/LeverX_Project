@@ -13,9 +13,7 @@ import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 @Data
-@Builder
 @RedisHash("AuthorizationToken")
-@Accessors(chain = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, doNotUseGetters = true)
 public class AuthorizationToken implements Serializable {
 

@@ -14,7 +14,7 @@ public class WebAppInitializer
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[] {
-                AppConfig.class
+                AppConfig.class,
         };
     }
 
