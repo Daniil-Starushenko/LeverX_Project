@@ -5,12 +5,10 @@ import com.leverx.blog.exception.EntityNotFoundException;
 import com.leverx.blog.model.dto.UserDto;
 import com.leverx.blog.model.entity.User;
 import com.leverx.blog.repository.mysql.UserRepository;
-import com.leverx.blog.security.mail.EmailBuilder;
 import com.leverx.blog.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,9 +32,9 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
 
-/**
-* Optional type for throwing exception with null returning
-*/
+    /**
+     * Optional type for throwing exception with null returning
+     */
     @Override
     @Transactional(readOnly = true)
     public UserDto getUser(Integer id) {

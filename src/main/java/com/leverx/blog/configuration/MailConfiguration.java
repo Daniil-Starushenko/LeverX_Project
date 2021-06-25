@@ -33,6 +33,8 @@ public class MailConfiguration {
     @Value("${mail.password}")
     private String password;
 
+    //TODO mail to localhost
+
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
