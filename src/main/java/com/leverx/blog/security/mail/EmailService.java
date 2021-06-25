@@ -2,7 +2,6 @@ package com.leverx.blog.security.mail;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -18,9 +17,6 @@ public class EmailService implements EmailSender{
 
     private JavaMailSender javaMailSender;
 
-    @Value("${mail.from}")
-    private String sendFrom;
-
     @Override
     @Async
     public void send(String to, String email) {
@@ -30,7 +26,7 @@ public class EmailService implements EmailSender{
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your email");
-            helper.setFrom(sendFrom);
+            helper.setFrom("daniil80801@gmail.com");
             javaMailSender.send(mimeMessage);
 
         } catch (MessagingException e) {
