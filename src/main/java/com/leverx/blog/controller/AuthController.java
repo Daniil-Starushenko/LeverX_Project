@@ -14,10 +14,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -57,8 +54,15 @@ public class AuthController {
         token.setUserId(userId);
         token.setTimeToLive(50L);
 
-        //authorizationTokenService.saveAuthorizationToken(token);
+        authorizationTokenService.saveAuthorizationToken(token);
         return "http://localhost:8080/auth/confirmation?token=" + token.getTokenId();
+    }
+
+    @GetMapping(value = "/confirmation")
+    public String confirmRegistry(@RequestParam("token") String token) {
+        AuthorizationToken authorizationToken = authorizationTokenService.getTokenById(token);
+
+        return authorizationToken.getTokenId();
     }
 
 }

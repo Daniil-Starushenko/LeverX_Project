@@ -24,15 +24,13 @@ public class AuthorizationTokenServiceImpl implements AuthorizationTokenService{
 
 
     @Override
-    public boolean isDeleted(AuthorizationToken token) {
-        String tokenId = token.toString();
+    public boolean isDeleted(String tokenId) {
         log.info("check is active token with id: {}", tokenId);
         return authorizationTokenRepository.findTokenByTokenId(tokenId).isEmpty();
     }
 
     @Override
-    public AuthorizationToken getTokenById(AuthorizationToken token) {
-        String tokenId = token.getTokenId();
+    public AuthorizationToken getTokenById(String tokenId) {
         log.info("get authorization token with id: {}", tokenId);
         return authorizationTokenRepository.findById(tokenId).get();
     }

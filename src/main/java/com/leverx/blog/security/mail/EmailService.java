@@ -2,6 +2,9 @@ package com.leverx.blog.security.mail;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -12,10 +15,15 @@ import javax.mail.internet.MimeMessage;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@PropertySource("classpath:application.properties")
+
 public class EmailService implements EmailSender{
 
+    @Autowired
     private JavaMailSender javaMailSender;
+
+    @Value("${mail.from}")
+    private String mailFrom;
 
     @Override
     @Async
@@ -26,7 +34,7 @@ public class EmailService implements EmailSender{
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your email");
-            helper.setFrom("daniil80801@gmail.com"); //TODO string constant
+            helper.setFrom(mailFrom); //TODO string constant
             javaMailSender.send(mimeMessage);
 
         } catch (MessagingException e) {

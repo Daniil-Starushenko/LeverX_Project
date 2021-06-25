@@ -4,7 +4,7 @@ public interface AuthorizationTokenService {
 
     AuthorizationToken saveAuthorizationToken(AuthorizationToken token);
 
-    boolean isDeleted(AuthorizationToken token);
+    boolean isDeleted(String tokenId);
 
-    AuthorizationToken getTokenById(AuthorizationToken token);
+    AuthorizationToken getTokenById(String tokenId);
 }
