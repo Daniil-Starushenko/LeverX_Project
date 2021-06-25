@@ -2,6 +2,7 @@ package com.leverx.blog.service;
 
 import com.leverx.blog.model.dto.UserDto;
 import com.leverx.blog.model.entity.User;
+import com.leverx.blog.model.entity.UserStatus;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -21,6 +22,8 @@ public interface UserService {
     User saveUser(User user);
 
     User updateUser(User user, UserDto userDto);
+
+    User updateUserStatus(User user, UserStatus status);
 
     void deleteUser(User user);
 

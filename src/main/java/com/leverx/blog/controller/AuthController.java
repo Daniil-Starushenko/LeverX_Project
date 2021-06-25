@@ -1,13 +1,14 @@
 package com.leverx.blog.controller;
 
 import com.leverx.blog.exception.auth.AuthException;
+import com.leverx.blog.model.dto.UserDto;
 import com.leverx.blog.model.dto.UserSignUpDto;
 import com.leverx.blog.model.entity.User;
+import com.leverx.blog.model.entity.UserStatus;
 import com.leverx.blog.security.mail.EmailBuilder;
 import com.leverx.blog.security.mail.EmailSender;
 import com.leverx.blog.security.mail.code.AuthorizationToken;
 import com.leverx.blog.security.mail.code.AuthorizationTokenService;
-import com.leverx.blog.security.mail.code.AuthorizationTokenServiceImpl;
 import com.leverx.blog.security.mail.code.CodeGenerator;
 import com.leverx.blog.service.UserService;
 import lombok.AllArgsConstructor;
@@ -52,17 +53,25 @@ public class AuthController {
         AuthorizationToken token = new AuthorizationToken();
         token.setTokenId(codeGenerator.generateCode());
         token.setUserId(userId);
-        token.setTimeToLive(50L);
+        token.setTimeToLive(1L);
 
         authorizationTokenService.saveAuthorizationToken(token);
         return "http://localhost:8080/auth/confirmation?token=" + token.getTokenId();
     }
 
     @GetMapping(value = "/confirmation")
-    public String confirmRegistry(@RequestParam("token") String token) {
-        AuthorizationToken authorizationToken = authorizationTokenService.getTokenById(token);
-
-        return authorizationToken.getTokenId();
+    public void confirmRegistry(@RequestParam("token") String token) {
+        if (authorizationTokenService.isDeleted(token)) {
+            throw new AuthException(HttpStatus.NOT_FOUND,
+                    "the authorization code is not active" + token);
+        }
+        AuthorizationToken authToken = authorizationTokenService.getTokenById(token);
+        UserDto userToAuthorize = userService.getUser(authToken.getUserId());
+        User user = modelMapper
+                .map(userToAuthorize, User.class);
+        userService.updateUserStatus(user, UserStatus.ACTIVATED);
     }
+
+
 
 }
