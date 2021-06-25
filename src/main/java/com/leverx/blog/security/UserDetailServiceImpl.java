@@ -25,7 +25,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return userRepository.findUserByEmail(email)
                 .map(user -> User.withUsername(user.getEmail())
                         .password(user.getPassword())
-                        .authorities(new SimpleGrantedAuthority(user.getUserStatus().name()))
+                        .authorities(user.getUserStatus())
                         .accountExpired(false)
                         .accountLocked(false)
                         .credentialsExpired(false)
