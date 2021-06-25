@@ -57,7 +57,7 @@ public class AuthController {
         token.setUserId(userId);
         token.setTimeToLive(50L);
 
-        authorizationTokenService.saveAuthorizationToken(token);
+        //authorizationTokenService.saveAuthorizationToken(token);
         return "http://localhost:8080/auth/confirmation?token=" + token.getTokenId();
     }
 
