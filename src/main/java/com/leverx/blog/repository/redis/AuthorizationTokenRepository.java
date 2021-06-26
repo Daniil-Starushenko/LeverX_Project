@@ -1,6 +1,6 @@
 package com.leverx.blog.repository.redis;
 
-import com.leverx.blog.security.mail.code.AuthorizationToken;
+import com.leverx.blog.security.code.AuthorizationToken;
 import org.springframework.data.keyvalue.repository.KeyValueRepository;
 import org.springframework.stereotype.Repository;
 

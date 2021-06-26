@@ -1,4 +1,4 @@
-package com.leverx.blog.security.mail.code;
+package com.leverx.blog.security.code;
 
 public interface AuthorizationTokenService {
 

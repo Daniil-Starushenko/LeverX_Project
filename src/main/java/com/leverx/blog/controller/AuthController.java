@@ -10,9 +10,9 @@ import com.leverx.blog.model.entity.UserStatus;
 import com.leverx.blog.security.jwt.JwtProvider;
 import com.leverx.blog.security.mail.EmailBuilder;
 import com.leverx.blog.security.mail.EmailSender;
-import com.leverx.blog.security.mail.code.AuthorizationToken;
-import com.leverx.blog.security.mail.code.AuthorizationTokenService;
-import com.leverx.blog.security.mail.code.CodeGenerator;
+import com.leverx.blog.security.code.AuthorizationToken;
+import com.leverx.blog.security.code.AuthorizationTokenService;
+import com.leverx.blog.security.code.CodeGenerator;
 import com.leverx.blog.service.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -31,6 +31,8 @@ import java.util.Map;
 @AllArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
+
+    private final static String REGISTRATION_LINK = "http://localhost:8080/auth/confirmation?token=";
 
     private UserService userService;
     private ModelMapper modelMapper;
@@ -63,7 +65,7 @@ public class AuthController {
         token.setTimeToLive(1L);
 
         authorizationTokenService.saveAuthorizationToken(token);
-        return "http://localhost:8080/auth/confirmation?token=" + token.getTokenId();
+        return REGISTRATION_LINK + token.getTokenId();
     }
 
     @GetMapping(value = "/confirmation")
@@ -96,5 +98,9 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping(value = "/forgot_password/{email}/{name}")
+    public String forgotPassword(@PathVariable("email") String email, @PathVariable("name") String name) {
+        return email + ' ' + name;
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.leverx.blog.security.mail.code;
+package com.leverx.blog.security.code;
 
 import com.leverx.blog.repository.redis.AuthorizationTokenRepository;
 import lombok.extern.slf4j.Slf4j;
