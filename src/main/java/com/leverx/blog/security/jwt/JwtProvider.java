@@ -3,6 +3,7 @@ package com.leverx.blog.security.jwt;
 import com.leverx.blog.exception.auth.JwtAuthenticationException;
 import com.leverx.blog.model.entity.UserStatus;
 import com.leverx.blog.security.UserDetailServiceImpl;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,8 @@ public class JwtProvider {
     private long validityTime;
 
     @Autowired
-    private UserDetailServiceImpl userDetailsService;
+    private UserDetailsService userDetailsService;
+
 
     public String createToken(String email, UserStatus role) {
 
