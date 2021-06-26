@@ -16,7 +16,6 @@ import javax.mail.internet.MimeMessage;
 @Slf4j
 @Service
 @PropertySource("classpath:application.properties")
-
 public class EmailService implements EmailSender{
 
     @Autowired

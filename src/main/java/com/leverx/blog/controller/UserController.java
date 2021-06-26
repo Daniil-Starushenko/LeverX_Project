@@ -1,12 +1,14 @@
 package com.leverx.blog.controller;
 
+import com.leverx.blog.model.dto.UserDto;
+import com.leverx.blog.security.code.CodeGenerator;
+import com.leverx.blog.security.code.ConfirmationToken;
 import com.leverx.blog.security.code.ConfirmationTokenService;
 import com.leverx.blog.security.jwt.JwtProvider;
 import com.leverx.blog.security.mail.EmailBuilder;
 import com.leverx.blog.security.mail.EmailSender;
 import com.leverx.blog.service.UserService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,18 +19,32 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private UserService userService;
-    private ModelMapper modelMapper;
     private EmailBuilder emailBuilder;
     private EmailSender emailSender;
-    private ConfirmationTokenService authorizationTokenService;
+    private ConfirmationTokenService confirmationTokenService;
     private AuthenticationManager authenticationManager;
     private JwtProvider jwtProvider;
 
-    @PostMapping(value = "/forgot_password/{email}/{name}")
+    @PostMapping(value = "/auth/forgot_password/{email}/{name}")
     public void forgotPassword(@PathVariable("email") String email, @PathVariable("name") String name) {
+        UserDto user = userService.findPresentUserDto(email);
+        sendEmailWithCode(user);
+    }
 
+    private void sendEmailWithCode(UserDto user) {
+        emailSender.send(user.getEmail(),
+                emailBuilder.generateEmailWithCode(getConfirmationCode(user)));
+    }
 
-        return ;
+    private String getConfirmationCode(UserDto userDto) {
+        CodeGenerator codeGenerator = new CodeGenerator();
+        ConfirmationToken confirmationToken = new ConfirmationToken();
+        confirmationToken.setTokenId(codeGenerator.generateCode());
+        confirmationToken.setUserId(userDto.getId());
+        confirmationToken.setTimeToLive(24L);
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+        return confirmationToken.getTokenId();
     }
 
 }

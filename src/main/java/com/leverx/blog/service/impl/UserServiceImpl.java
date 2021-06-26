@@ -6,18 +6,16 @@ import com.leverx.blog.model.dto.UserDto;
 import com.leverx.blog.model.entity.User;
 import com.leverx.blog.model.entity.UserStatus;
 import com.leverx.blog.repository.mysql.UserRepository;
+import com.leverx.blog.security.jwt.JwtProvider;
 import com.leverx.blog.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -32,6 +30,8 @@ public class UserServiceImpl implements UserService {
 
     private PasswordEncoder passwordEncoder;
 
+    private JwtProvider jwtProvider;
+
 
     /**
      * Optional type for throwing exception with null returning
@@ -45,6 +45,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto findPresentUserDto(String email) {
+        log.info("find userDto by email {}",  email);
+        return userRepository.findUserByEmail(email)
+                .map(user -> modelMapper.map(user, UserDto.class))
+                .orElseThrow(() -> new EntityNotFoundException("there is no users with given email: " + email));
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<User> findPresentUser(String email) {
         log.info("find user by email: {}", email);
@@ -55,11 +63,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findPresentUser(Long userId) {
         return Optional.empty();
-    }
-
-    @Override
-    public List<User> getUsers(Specification<User> specification, Sort sort) {
-        return null;
     }
 
     @Override
@@ -78,8 +81,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUserStatus(User user, UserStatus status) {
-         user.setUserStatus(status);
-         return userRepository.save(user);
+        user.setUserStatus(status);
+        return userRepository.save(user);
     }
 
     @Override
@@ -97,11 +100,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isActiveUser(Principal principal) {
         return false;
-    }
-
-    @Override
-    public String changeEmailAndGenerateJwt(User user, String newEmail) {
-        return null;
     }
 
     @Override

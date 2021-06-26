@@ -24,7 +24,7 @@ public class ConfirmationToken implements Serializable {
 
     private Integer userId;
 
-    @TimeToLive(unit = TimeUnit.MINUTES)
+    @TimeToLive(unit = TimeUnit.HOURS)
     private Long timeToLive;
 
 }

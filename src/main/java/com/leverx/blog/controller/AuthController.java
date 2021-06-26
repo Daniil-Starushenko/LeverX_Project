@@ -38,7 +38,7 @@ public class AuthController {
     private ModelMapper modelMapper;
     private EmailBuilder emailBuilder;
     private EmailSender emailSender;
-    private ConfirmationTokenService authorizationTokenService;
+    private ConfirmationTokenService confirmationTokenService;
     private AuthenticationManager authenticationManager;
     private JwtProvider jwtProvider;
 
@@ -62,19 +62,19 @@ public class AuthController {
         ConfirmationToken token = new ConfirmationToken();
         token.setTokenId(codeGenerator.generateCode());
         token.setUserId(userId);
-        token.setTimeToLive(1L);
+        token.setTimeToLive(24L);
 
-        authorizationTokenService.saveConfirmationToken(token);
+        confirmationTokenService.saveConfirmationToken(token);
         return REGISTRATION_LINK + token.getTokenId();
     }
 
     @GetMapping(value = "/confirmation")
     public void confirmRegistry(@RequestParam("token") String token) {
-        if (authorizationTokenService.isDeleted(token)) {
+        if (confirmationTokenService.isDeleted(token)) {
             throw new AuthException(HttpStatus.NOT_FOUND,
                     "the authorization code is not active" + token);
         }
-        ConfirmationToken authToken = authorizationTokenService.getTokenById(token);
+        ConfirmationToken authToken = confirmationTokenService.getTokenById(token);
         UserDto userToAuthorize = userService.getUser(authToken.getUserId());
         User user = modelMapper
                 .map(userToAuthorize, User.class);
