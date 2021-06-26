@@ -2,8 +2,6 @@ package com.leverx.blog.security.jwt;
 
 import com.leverx.blog.exception.auth.JwtAuthenticationException;
 import com.leverx.blog.model.entity.UserStatus;
-import com.leverx.blog.security.UserDetailServiceImpl;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;

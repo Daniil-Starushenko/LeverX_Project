@@ -45,8 +45,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<User> findPresentUser(String email) {
-        return Optional.empty();
+        log.info("find user by email: {}", email);
+        return userRepository.findUserByEmail(email)
+                .filter(user -> user.getUserStatus() != UserStatus.WAIT_ACTIVATING);
     }
 
     @Override
