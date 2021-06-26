@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmailBuilder {
 
-    public String buildEmail(String name, String link) {
+    public String buildRegistryEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
@@ -72,5 +72,12 @@ public class EmailBuilder {
                 "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" +
                 "\n" +
                 "</div></div>";
+    }
+
+    public String generateEmailWithCode(String code) {
+        return "<div>" +
+                "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"Confirmation code to change  password: >" + code + "<blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"></p></blockquote>\n Code will be not active after 24 hours. <p>See you soon</p>" +
+                "</div>";
+
     }
 }

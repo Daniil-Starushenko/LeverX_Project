@@ -1,6 +1,6 @@
 package com.leverx.blog.security.code;
 
-import com.leverx.blog.repository.redis.AuthorizationTokenRepository;
+import com.leverx.blog.repository.redis.ConfirmationTokenRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,13 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
-public class AuthorizationTokenServiceImpl implements AuthorizationTokenService{
+public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
 
     @Autowired
-    private AuthorizationTokenRepository authorizationTokenRepository;
+    private ConfirmationTokenRepository authorizationTokenRepository;
 
     @Override
-    public AuthorizationToken saveAuthorizationToken(AuthorizationToken token) {
+    public ConfirmationToken saveConfirmationToken(ConfirmationToken token) {
         log.info("Register token with id: {}", token.getTokenId());
         return authorizationTokenRepository.save(token);
     }
@@ -30,7 +30,7 @@ public class AuthorizationTokenServiceImpl implements AuthorizationTokenService{
     }
 
     @Override
-    public AuthorizationToken getTokenById(String tokenId) {
+    public ConfirmationToken getTokenById(String tokenId) {
         log.info("get authorization token with id: {}", tokenId);
         return authorizationTokenRepository.findById(tokenId).get();
     }

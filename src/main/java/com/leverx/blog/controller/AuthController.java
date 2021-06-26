@@ -7,11 +7,11 @@ import com.leverx.blog.model.dto.UserSignInDto;
 import com.leverx.blog.model.dto.UserSignUpDto;
 import com.leverx.blog.model.entity.User;
 import com.leverx.blog.model.entity.UserStatus;
+import com.leverx.blog.security.code.ConfirmationToken;
 import com.leverx.blog.security.jwt.JwtProvider;
 import com.leverx.blog.security.mail.EmailBuilder;
 import com.leverx.blog.security.mail.EmailSender;
-import com.leverx.blog.security.code.AuthorizationToken;
-import com.leverx.blog.security.code.AuthorizationTokenService;
+import com.leverx.blog.security.code.ConfirmationTokenService;
 import com.leverx.blog.security.code.CodeGenerator;
 import com.leverx.blog.service.UserService;
 import lombok.AllArgsConstructor;
@@ -38,7 +38,7 @@ public class AuthController {
     private ModelMapper modelMapper;
     private EmailBuilder emailBuilder;
     private EmailSender emailSender;
-    private AuthorizationTokenService authorizationTokenService;
+    private ConfirmationTokenService authorizationTokenService;
     private AuthenticationManager authenticationManager;
     private JwtProvider jwtProvider;
 
@@ -54,17 +54,17 @@ public class AuthController {
 
     private void sendConfirmationMail(User user) {
         emailSender.send(user.getEmail(),
-                emailBuilder.buildEmail(user.getFirstName(), getAuthorizationLink(user.getId())));
+                emailBuilder.buildRegistryEmail(user.getFirstName(), getAuthorizationLink(user.getId())));
     }
 
     private String getAuthorizationLink(Integer userId) {
         CodeGenerator codeGenerator = new CodeGenerator();
-        AuthorizationToken token = new AuthorizationToken();
+        ConfirmationToken token = new ConfirmationToken();
         token.setTokenId(codeGenerator.generateCode());
         token.setUserId(userId);
         token.setTimeToLive(1L);
 
-        authorizationTokenService.saveAuthorizationToken(token);
+        authorizationTokenService.saveConfirmationToken(token);
         return REGISTRATION_LINK + token.getTokenId();
     }
 
@@ -74,7 +74,7 @@ public class AuthController {
             throw new AuthException(HttpStatus.NOT_FOUND,
                     "the authorization code is not active" + token);
         }
-        AuthorizationToken authToken = authorizationTokenService.getTokenById(token);
+        ConfirmationToken authToken = authorizationTokenService.getTokenById(token);
         UserDto userToAuthorize = userService.getUser(authToken.getUserId());
         User user = modelMapper
                 .map(userToAuthorize, User.class);
@@ -96,11 +96,6 @@ public class AuthController {
         response.put("token", token);
 
         return ResponseEntity.ok(response);
-    }
-
-    @PostMapping(value = "/forgot_password/{email}/{name}")
-    public String forgotPassword(@PathVariable("email") String email, @PathVariable("name") String name) {
-        return email + ' ' + name;
     }
 
 }

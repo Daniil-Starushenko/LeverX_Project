@@ -1,5 +1,6 @@
-package com.leverx.blog.security.code;
+package com.leverx.blog.security.mail.code;
 
+import com.leverx.blog.security.code.CodeGenerator;
 import org.junit.Test;
 
 public class CodeGeneratorTest {

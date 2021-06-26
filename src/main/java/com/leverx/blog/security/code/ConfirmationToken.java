@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 @Data
 @RedisHash("AuthorizationToken")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, doNotUseGetters = true)
-public class AuthorizationToken implements Serializable {
+public class ConfirmationToken implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
