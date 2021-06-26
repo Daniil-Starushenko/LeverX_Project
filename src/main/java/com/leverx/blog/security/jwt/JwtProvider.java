@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Component
@@ -21,6 +22,7 @@ public class JwtProvider {
 
     public static final String ROLE_CLAIM = "Role";
     public static final String AUTH_HEADER = HttpHeaders.AUTHORIZATION;
+    public static final String TOKEN_PREAMBLE = "Bearer ";
 
     @Value("${jwt.token.secret}")
     private String secret;
@@ -59,6 +61,15 @@ public class JwtProvider {
                 .getBody()
                 .getSubject();
     }
+
+    public String resolveToken(HttpServletRequest req) {
+        String bearerToken = req.getHeader(AUTH_HEADER);
+        if (bearerToken != null && bearerToken.startsWith(TOKEN_PREAMBLE)) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+
 
     public boolean validateToken(String token) {
         try {
