@@ -1,7 +1,7 @@
 package com.leverx.blog.exception.handlers;
 
 import com.leverx.blog.exception.ApiException;
-import com.leverx.blog.exception.EntityNotFoundException;
+import com.leverx.blog.exception.entity.EntityNotFoundException;
 import com.leverx.blog.model.dto.ApiExceptionDto;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;

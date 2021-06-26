@@ -1,7 +1,7 @@
 package com.leverx.blog.service.impl;
 
 
-import com.leverx.blog.exception.EntityNotFoundException;
+import com.leverx.blog.exception.entity.EntityNotFoundException;
 import com.leverx.blog.model.dto.UserDto;
 import com.leverx.blog.model.entity.User;
 import com.leverx.blog.model.entity.UserStatus;
