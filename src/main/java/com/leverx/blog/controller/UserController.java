@@ -56,4 +56,6 @@ public class UserController {
         return userService.changePasswordAndGenerateJwt(token.getUserId(), newPassword);
     }
 
+
+
 }
