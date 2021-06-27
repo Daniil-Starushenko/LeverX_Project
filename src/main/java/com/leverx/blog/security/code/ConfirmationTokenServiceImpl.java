@@ -36,4 +36,16 @@ public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
         return authorizationTokenRepository.findById(tokenId)
                 .orElseThrow(() -> new EntityNotFoundException("there is no such code: " + tokenId));
     }
+
+    @Override
+    public void deleteTokenByTokenId(String tokenId) {
+        authorizationTokenRepository.deleteByTokenId(tokenId);
+    }
+
+    @Override
+    public void deleteToken(ConfirmationToken tokenToDelete) {
+        authorizationTokenRepository.delete(tokenToDelete);
+    }
+
+
 }

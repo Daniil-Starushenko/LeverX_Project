@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface ConfirmationTokenRepository extends KeyValueRepository<ConfirmationToken, String> {
 
    Optional<ConfirmationToken> findTokenByTokenId(String tokenId);
+
+   void deleteByTokenId(String tokenId);
 }
