@@ -20,7 +20,7 @@ create table `article` (
                            `status` ENUM('PRIVATE', 'DRAFT'),
                            `author_id` INTEGER,
                            `created_at` DATE NOT NULL,
-                           `changed_at` DATE NOT NULL,
+                           `changed_at` DATE,
 
                            PRIMARY KEY(`id`),
                            FOREIGN KEY (`author_id`) REFERENCES `user`(`id`),

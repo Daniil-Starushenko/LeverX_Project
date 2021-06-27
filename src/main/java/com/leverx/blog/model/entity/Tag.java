@@ -1,5 +1,6 @@
 package com.leverx.blog.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
