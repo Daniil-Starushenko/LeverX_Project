@@ -9,10 +9,15 @@ import com.leverx.blog.security.mail.EmailBuilder;
 import com.leverx.blog.security.mail.EmailSender;
 import com.leverx.blog.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -56,6 +61,11 @@ public class UserController {
         return userService.changePasswordAndGenerateJwt(token.getUserId(), newPassword);
     }
 
-
+    @GetMapping(value = "/auth/check_code/{code}")
+    public ResponseEntity checkRelevance(@PathVariable("code") String code) {
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("is code actual:", confirmationTokenService.isActive(code));
+        return ResponseEntity.ok(response);
+    }
 
 }

@@ -6,9 +6,12 @@ public interface ConfirmationTokenService {
 
     boolean isDeleted(String tokenId);
 
+    boolean isActive(String tokenId);
+
     ConfirmationToken getTokenById(String tokenId);
 
     void deleteTokenByTokenId(String tokenId);
 
     void deleteToken(ConfirmationToken tokenToDelete);
+
 }

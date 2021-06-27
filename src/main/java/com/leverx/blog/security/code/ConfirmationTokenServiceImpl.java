@@ -31,6 +31,12 @@ public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
     }
 
     @Override
+    public boolean isActive(String tokenId) {
+        log.info("check is active token with id: {}", tokenId);
+        return authorizationTokenRepository.findTokenByTokenId(tokenId).isPresent();
+    }
+
+    @Override
     public ConfirmationToken getTokenById(String tokenId) {
         log.info("get authorization token with id: {}", tokenId);
         return authorizationTokenRepository.findById(tokenId)
@@ -46,6 +52,5 @@ public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
     public void deleteToken(ConfirmationToken tokenToDelete) {
         authorizationTokenRepository.delete(tokenToDelete);
     }
-
 
 }
