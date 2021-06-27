@@ -28,7 +28,6 @@ public class ArticleController {
     private TagService tagService;
 
     @PostMapping(value = "/articles")
-
     public void createArticle(@RequestBody RequestArticleDto addArticle, Principal principal) {
         User currentUser = modelMapper
                 .map(userService.findPresentUserDto(principal.getName()), User.class);
@@ -47,7 +46,7 @@ public class ArticleController {
     private Set<Tag> getTags(List<TagValue> tagValueList) {
         Set<Tag> tags = new HashSet<>();
         for (TagValue tagValue: tagValueList) {
-            Tag tag = tagService.getTagByTagValue(tagValue);
+            Tag tag = tagService.getByTagValue(tagValue);
             tags.add(tag);
         }
         return tags;

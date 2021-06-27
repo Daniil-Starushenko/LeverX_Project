@@ -7,6 +7,6 @@ public interface TagService {
 
     Tag saveTag(Tag tag);
 
-    Tag getTagByTagValue(TagValue tagValue);
+    Tag getByTagValue(TagValue tagValue);
 
 }

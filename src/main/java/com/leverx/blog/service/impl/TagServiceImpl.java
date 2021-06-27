@@ -25,7 +25,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     @Transactional(readOnly = true)
-    public Tag getTagByTagValue(TagValue tagValue) {
+    public Tag getByTagValue(TagValue tagValue) {
         log.info("find tag by tag value: {}", tagValue.name());
         return tagRepository.getTagByTagValue(tagValue);
     }

@@ -1,7 +1,7 @@
 package com.leverx.blog.model.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,6 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "tag")
 @Data
+@EqualsAndHashCode
 public class Tag {
     @Id
     @Column(name = "id")
@@ -19,6 +20,7 @@ public class Tag {
     @Enumerated(EnumType.STRING)
     private TagValue tagValue;
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
     private Set<Article> articles;
 }

@@ -1,6 +1,7 @@
 package com.leverx.blog.model.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
     @Id
     @Column(name = "id")
@@ -24,6 +26,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @EqualsAndHashCode.Include
     @Column(name = "email", nullable = false)
     private String email;
 

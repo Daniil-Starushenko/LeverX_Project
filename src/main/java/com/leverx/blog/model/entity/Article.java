@@ -1,6 +1,7 @@
 package com.leverx.blog.model.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.util.Set;
 @Entity
 @Table(name = "article")
 @Data
+@EqualsAndHashCode
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +23,10 @@ public class Article {
     private String text;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private ArticleStatus status;
 
+    @EqualsAndHashCode.Exclude
     @JoinColumn(name = "author_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
