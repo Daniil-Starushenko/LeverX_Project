@@ -16,8 +16,9 @@ public class Tag {
     private Integer id;
 
     @Column(name = "value")
+    @Enumerated(EnumType.STRING)
     private TagValue tagValue;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
     private Set<Article> articles;
 }

@@ -4,7 +4,9 @@ import com.leverx.blog.model.dto.ArticleDto;
 import com.leverx.blog.model.dto.RequestArticleDto;
 import com.leverx.blog.model.entity.*;
 import com.leverx.blog.service.ArticleService;
+import com.leverx.blog.service.TagService;
 import com.leverx.blog.service.UserService;
+import com.leverx.blog.service.impl.TagServiceImpl;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +25,10 @@ public class ArticleController {
     private ModelMapper modelMapper;
     private ArticleService articleService;
     private UserService userService;
+    private TagService tagService;
 
     @PostMapping(value = "/articles")
+
     public void createArticle(@RequestBody RequestArticleDto addArticle, Principal principal) {
         User currentUser = modelMapper
                 .map(userService.findPresentUserDto(principal.getName()), User.class);
@@ -33,23 +37,20 @@ public class ArticleController {
         newArticle.setUser(currentUser);
         newArticle.setStatus(addArticle.getStatus());
         if (!addArticle.getTags().isEmpty()) {
-            Set<Tag> tags = new HashSet<>();
-            for (TagValue tagValue: addArticle.getTags()) {
-                Tag tag = new Tag();
-                tag.setTagValue(tagValue);
-                tags.add(tag);
-            }
-            newArticle.setTags(tags);
+            newArticle.setTags(getTags(addArticle.getTags()));
         }
         newArticle.setTitle(addArticle.getTitle());
         newArticle.setText(addArticle.getText());
         articleService.saveArticle(newArticle);
     }
 
-    private Set<Tag> saveTags(List<TagValue> tagValueList) {
-
-
-        return null;
+    private Set<Tag> getTags(List<TagValue> tagValueList) {
+        Set<Tag> tags = new HashSet<>();
+        for (TagValue tagValue: tagValueList) {
+            Tag tag = tagService.getTagByTagValue(tagValue);
+            tags.add(tag);
+        }
+        return tags;
     }
 
 }

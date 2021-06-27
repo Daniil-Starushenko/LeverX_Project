@@ -17,7 +17,7 @@ create table `article` (
                            `id` INTEGER NOT NULL AUTO_INCREMENT,
                            `title` VARCHAR(255) NOT NULL,
                            `text` TEXT NOT NULL,
-                           `status` ENUM('PRIVATE', 'DRAFT'),
+                           `status` ENUM('PUBLIC', 'DRAFT'),
                            `author_id` INTEGER,
                            `created_at` DATE NOT NULL,
                            `changed_at` DATE,
