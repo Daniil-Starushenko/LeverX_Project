@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,6 +67,11 @@ public class UserController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("is code actual:", confirmationTokenService.isActive(code));
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "/check/chech")
+    public String check(Principal principal) {
+        return principal.getName();
     }
 
 }

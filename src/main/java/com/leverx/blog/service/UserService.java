@@ -14,20 +14,20 @@ public interface UserService {
 
     Optional<User> findPresentUser(String email);
 
-    Optional<User> findPresentUser(Long userId);
-
     User saveUser(User user);
-
-    User updateUser(User user, UserDto userDto);
 
     User updateUserStatus(User user, UserStatus status);
 
-    void deleteUser(User user);
-
     boolean existsUserByEmail(String email);
+
+    String changePasswordAndGenerateJwt(Integer userId, String newPassword);
+
+    User updateUser(User user, UserDto userDto);
+
+    void deleteUser(User user);
 
     boolean isActiveUser(Principal principal);
 
-    String changePasswordAndGenerateJwt(Integer userId, String newPassword);
+    Optional<User> findPresentUser(Long userId);
 
 }

@@ -75,6 +75,7 @@ public class AuthController {
                     "the authorization code is not active" + token);
         }
         ConfirmationToken authToken = confirmationTokenService.getTokenById(token);
+        confirmationTokenService.deleteToken(authToken);
         UserDto userToAuthorize = userService.getUser(authToken.getUserId());
         User user = modelMapper
                 .map(userToAuthorize, User.class);
