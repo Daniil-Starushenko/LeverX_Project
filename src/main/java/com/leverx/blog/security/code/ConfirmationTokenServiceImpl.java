@@ -1,5 +1,6 @@
 package com.leverx.blog.security.code;
 
+import com.leverx.blog.exception.entity.EntityNotFoundException;
 import com.leverx.blog.repository.redis.ConfirmationTokenRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
     @Override
     public ConfirmationToken getTokenById(String tokenId) {
         log.info("get authorization token with id: {}", tokenId);
-        return authorizationTokenRepository.findById(tokenId).get();
+        return authorizationTokenRepository.findById(tokenId)
+                .orElseThrow(() -> new EntityNotFoundException("there is no such code: " + tokenId));
     }
 }

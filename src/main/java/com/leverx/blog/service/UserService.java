@@ -28,6 +28,6 @@ public interface UserService {
 
     boolean isActiveUser(Principal principal);
 
-    String changePasswordAndGenerateJwt(User user, String newPassword);
+    String changePasswordAndGenerateJwt(Integer userId, String newPassword);
 
 }

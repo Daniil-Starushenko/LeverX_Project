@@ -103,7 +103,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String changePasswordAndGenerateJwt(User user, String newPassword) {
-        return null;
+    public String changePasswordAndGenerateJwt(Integer userId, String newPassword) {
+        log.info("Change password for user: {}", userId);
+
+        String hashedNewPassword = passwordEncoder.encode(newPassword);
+        User updateUser = userRepository.getOne(userId);
+        updateUser.setPassword(hashedNewPassword);
+        userRepository.save(updateUser);
+        String JwtForUser = jwtProvider.createToken(updateUser.getEmail(), updateUser.getUserStatus());
+
+        return JwtForUser;
     }
 }
