@@ -14,6 +14,8 @@ public interface UserService {
 
     Optional<User> findPresentUser(String email);
 
+    User findUser(String email);
+
     User saveUser(User user);
 
     User updateUserStatus(User user, UserStatus status);

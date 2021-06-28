@@ -11,6 +11,7 @@ import com.leverx.blog.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,6 +59,18 @@ public class UserServiceImpl implements UserService {
         log.info("find user by email: {}", email);
         return userRepository.findUserByEmail(email)
                 .filter(user -> user.getUserStatus() != UserStatus.WAIT_ACTIVATING);
+    }
+
+    /**
+     *
+     * @param email is a key of user
+     * @return <class>User</class> object or throw exception(optional)
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public User findUser(String email) {
+        return userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("user with given email is not found"));
     }
 
     @Override
