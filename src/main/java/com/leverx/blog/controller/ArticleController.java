@@ -1,22 +1,21 @@
 package com.leverx.blog.controller;
 
 import com.leverx.blog.model.dto.ArticleDto;
+import com.leverx.blog.model.dto.ArticlePageDto;
 import com.leverx.blog.model.dto.RequestArticleDto;
 import com.leverx.blog.model.entity.*;
 import com.leverx.blog.service.ArticleService;
 import com.leverx.blog.service.TagService;
 import com.leverx.blog.service.UserService;
-import com.leverx.blog.service.impl.TagServiceImpl;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -27,6 +26,7 @@ public class ArticleController {
     private UserService userService;
     private TagService tagService;
 
+    //TODO add method returning User, replace userDto
     @PostMapping(value = "/articles")
     public void createArticle(@RequestBody RequestArticleDto addArticle, Principal principal) {
         User currentUser = modelMapper
@@ -50,6 +50,21 @@ public class ArticleController {
             tags.add(tag);
         }
         return tags;
+    }
+
+    @GetMapping("/articles")
+    public ArticlePageDto getArticlesOnPage(@RequestParam Integer page,
+                                            @RequestParam Integer pageLimit) {
+        List<ArticleDto> articles = articleService.findArticlesOnPage(page, pageLimit).stream()
+                .map(article -> modelMapper.map(article, ArticleDto.class))
+                .collect(Collectors.toList());
+        long totalRecords = articleService.articleCount();
+        return ArticlePageDto.builder()
+                .page(page)
+                .pageLimit(pageLimit)
+                .totalRecords(totalRecords)
+                .articles(articles)
+                .build();
     }
 
 }

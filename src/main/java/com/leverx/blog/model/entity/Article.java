@@ -28,7 +28,7 @@ public class Article {
 
     @EqualsAndHashCode.Exclude
     @JoinColumn(name = "author_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @Column(name = "created_at")
@@ -37,10 +37,12 @@ public class Article {
     @Column(name = "changed_at")
     private LocalDate changingDate;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "article")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "article", fetch = FetchType.EAGER )
+    @EqualsAndHashCode.Exclude
     private Set<Comment> comments;
 
-    @ManyToMany
+    @EqualsAndHashCode.Exclude
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "each_tag",
         joinColumns = @JoinColumn(name = "article_id"),
         inverseJoinColumns = @JoinColumn(name = "tag_id"))
