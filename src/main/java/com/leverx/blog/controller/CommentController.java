@@ -1,7 +1,9 @@
 package com.leverx.blog.controller;
 
+import com.leverx.blog.exception.entity.InvalidateArgumentException;
 import com.leverx.blog.model.dto.CreateCommentDto;
 import com.leverx.blog.model.entity.Article;
+import com.leverx.blog.model.entity.ArticleStatus;
 import com.leverx.blog.model.entity.User;
 import com.leverx.blog.service.ArticleService;
 import com.leverx.blog.service.CommentService;
@@ -29,9 +31,14 @@ public class CommentController {
                               @RequestBody CreateCommentDto commentDto,
                               Principal principal) {
         Article article = articleService.getArticle(articleId);
+        if (article.getStatus() == ArticleStatus.DRAFT) {
+            throw new InvalidateArgumentException("article is not public");
+        }
         User currentUser = userService.findUser(principal.getName());
         commentService.saveComment(article, currentUser, commentDto.getMessage());
     }
+
+
 
 
 }

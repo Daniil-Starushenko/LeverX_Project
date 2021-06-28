@@ -13,9 +13,12 @@ public class UserDto {
     private Integer id;
     private String firstName;
     private String lastName;
+
     @JsonIgnore
     private String password;
+
     private String email;
+
     @JsonFormat(shape = STRING, pattern = "dd-MM-yyyy")
     private LocalDate registrationDate;
 }

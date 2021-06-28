@@ -10,6 +10,7 @@ import java.util.Set;
 public class TagDto {
     private Integer id;
     private TagValue tagValue;
+
     @JsonBackReference
     private Set<ArticleDto> articles;
 }
