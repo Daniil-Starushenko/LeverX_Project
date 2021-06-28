@@ -22,4 +22,5 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
     Page<Article> findAllByUser(User user, Pageable pageable);
 
     long countAllByUser(User user);
+
 }

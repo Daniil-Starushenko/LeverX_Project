@@ -25,10 +25,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional(readOnly = true)
     public Article getArticle(Integer id) {
-        Article article = articleRepository.findArticleById(id)
+        log.info("try to find article with id {}", id);
+        return articleRepository.findArticleById(id)
                 .orElseThrow(() -> new EntityNotFoundException("article with id: " + id + "is not found"));
-
-        return article;
     }
 
 

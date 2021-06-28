@@ -1,6 +1,7 @@
 package com.leverx.blog.controller;
 
 import com.leverx.blog.exception.entity.InvalidateArgumentException;
+import com.leverx.blog.model.dto.CommentDto;
 import com.leverx.blog.model.dto.CreateCommentDto;
 import com.leverx.blog.model.entity.Article;
 import com.leverx.blog.model.entity.ArticleStatus;
@@ -10,10 +11,7 @@ import com.leverx.blog.service.CommentService;
 import com.leverx.blog.service.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -38,7 +36,14 @@ public class CommentController {
         commentService.saveComment(article, currentUser, commentDto.getMessage());
     }
 
-
+    @GetMapping("/articles/{articleId}/comments/{commentId}")
+    public CommentDto showComment(@PathVariable("articleId") Integer articleId,
+                                  @PathVariable("commentId") Integer commentId) {
+        return modelMapper.map(
+                commentService.findByArticleIdAndCommentId(articleId, commentId),
+                CommentDto.class
+        );
+    }
 
 
 }
