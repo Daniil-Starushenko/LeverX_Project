@@ -3,6 +3,7 @@ package com.leverx.blog.service.impl;
 import com.leverx.blog.exception.entity.InvalidateArgumentException;
 import com.leverx.blog.model.dto.ArticleDto;
 import com.leverx.blog.model.entity.Article;
+import com.leverx.blog.model.entity.ArticleStatus;
 import com.leverx.blog.repository.mysql.ArticleRepository;
 import com.leverx.blog.service.ArticleService;
 import lombok.AllArgsConstructor;
@@ -33,21 +34,19 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Page<Article> findArticlesOnPage(int pageNumber, int pageLimit) {
-        if (pageNumber <= 0 || pageLimit <= 0) {
+        if (pageNumber <= 0 || pageLimit <= 0 || pageLimit > 10) {
             throw new InvalidateArgumentException("Page starts from 1. Provided: "
                     + pageNumber + ". Page limit minimal value is 1. Provided: "
                     + pageLimit);
         }
-
         PageRequest pageRequest = PageRequest.of(pageNumber - 1,
                 pageLimit);
-
-        return articleRepository.findAll(pageRequest);
+        return articleRepository.findAllByStatus(ArticleStatus.PUBLIC ,pageRequest);
     }
 
     @Override
     @Transactional(readOnly = true)
     public long articleCount() {
-        return articleRepository.count();
+        return articleRepository.countAllByStatus(ArticleStatus.PUBLIC);
     }
 }

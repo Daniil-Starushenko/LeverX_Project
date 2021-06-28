@@ -2,7 +2,7 @@ package com.leverx.blog.controller;
 
 import com.leverx.blog.model.dto.ArticleDto;
 import com.leverx.blog.model.dto.ArticlePageDto;
-import com.leverx.blog.model.dto.RequestArticleDto;
+import com.leverx.blog.model.dto.RequestAddArticleDto;
 import com.leverx.blog.model.entity.*;
 import com.leverx.blog.service.ArticleService;
 import com.leverx.blog.service.TagService;
@@ -28,7 +28,7 @@ public class ArticleController {
 
     //TODO add method returning User, replace userDto
     @PostMapping(value = "/articles")
-    public void createArticle(@RequestBody RequestArticleDto addArticle, Principal principal) {
+    public void createArticle(@RequestBody RequestAddArticleDto addArticle, Principal principal) {
         User currentUser = modelMapper
                 .map(userService.findPresentUserDto(principal.getName()), User.class);
         currentUser.setUserStatus(UserStatus.ACTIVATED);
@@ -66,5 +66,7 @@ public class ArticleController {
                 .articles(articles)
                 .build();
     }
+
+
 
 }
