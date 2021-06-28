@@ -19,4 +19,6 @@ public interface CommentService {
 
     long countByArticle(Article article);
 
+    void deleteComment(User user, Article article, Comment comment);
+
 }

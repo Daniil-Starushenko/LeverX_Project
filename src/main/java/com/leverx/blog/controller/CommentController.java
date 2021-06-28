@@ -4,6 +4,7 @@ import com.leverx.blog.exception.entity.InvalidateArgumentException;
 import com.leverx.blog.model.dto.*;
 import com.leverx.blog.model.entity.Article;
 import com.leverx.blog.model.entity.ArticleStatus;
+import com.leverx.blog.model.entity.Comment;
 import com.leverx.blog.model.entity.User;
 import com.leverx.blog.service.ArticleService;
 import com.leverx.blog.service.CommentService;
@@ -63,5 +64,14 @@ public class CommentController {
                 .build();
     }
 
+    @DeleteMapping("/articles/{articleId}/comments/{commentId}")
+    public void deleteComment(@PathVariable("articleId") Integer articleId,
+                              @PathVariable("commentId") Integer commentId,
+                              Principal principal) {
+        User user = userService.findUser(principal.getName());
+        Article article = articleService.getArticle(articleId);
+        Comment comment = commentService.findCommentById(commentId);
+        commentService.deleteComment(user, article, comment);
+    }
 
 }

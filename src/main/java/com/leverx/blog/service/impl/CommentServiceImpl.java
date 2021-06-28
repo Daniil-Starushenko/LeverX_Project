@@ -5,6 +5,7 @@ import com.leverx.blog.exception.entity.InvalidateArgumentException;
 import com.leverx.blog.model.entity.Article;
 import com.leverx.blog.model.entity.Comment;
 import com.leverx.blog.model.entity.User;
+import com.leverx.blog.repository.mysql.ArticleRepository;
 import com.leverx.blog.repository.mysql.CommentRepository;
 import com.leverx.blog.service.CommentService;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -23,6 +24,7 @@ import java.util.Optional;
 public class CommentServiceImpl implements CommentService {
 
     private CommentRepository commentRepository;
+    private ArticleRepository articleRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -55,6 +57,19 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public long countByArticle(Article article) {
         return commentRepository.countByArticle(article);
+    }
+
+    @Override
+    public void deleteComment(User user, Article article, Comment comment) {
+        if (!comment.getArticle().getId().equals(article.getId())) {
+            throw new InvalidateArgumentException("there is no such comment in article");
+        }
+        if (user.getId().equals(article.getUser().getId()) ||
+        user.getId().equals(comment.getUser().getId())) {
+            article.getComments().remove(comment);
+            articleRepository.save(article);
+            commentRepository.deleteById(comment.getId());
+        }
     }
 
     @Override
