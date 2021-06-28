@@ -1,8 +1,7 @@
 package com.leverx.blog.controller;
 
 import com.leverx.blog.exception.entity.InvalidateArgumentException;
-import com.leverx.blog.model.dto.CommentDto;
-import com.leverx.blog.model.dto.CreateCommentDto;
+import com.leverx.blog.model.dto.*;
 import com.leverx.blog.model.entity.Article;
 import com.leverx.blog.model.entity.ArticleStatus;
 import com.leverx.blog.model.entity.User;
@@ -14,6 +13,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -43,6 +44,23 @@ public class CommentController {
                 commentService.findByArticleIdAndCommentId(articleId, commentId),
                 CommentDto.class
         );
+    }
+
+    @GetMapping("/articles/{articleId}/comments")
+    public CommentsPageDto showCommentsInArticles(@PathVariable("articleId") Integer articleId,
+                                                  @RequestParam Integer page,
+                                                  @RequestParam Integer pageLimit) {
+        Article article = articleService.getArticle(articleId);
+        List<CommentDto> comments = commentService.findCommentsPage(article, page , pageLimit).stream()
+                .map(comment -> modelMapper.map(comment, CommentDto.class))
+                .collect(Collectors.toList());
+        long totalRecords = commentService.countByArticle(article);
+        return CommentsPageDto.builder()
+                .page(page)
+                .pageLimit(pageLimit)
+                .totalRecords(totalRecords)
+                .comments(comments)
+                .build();
     }
 
 
