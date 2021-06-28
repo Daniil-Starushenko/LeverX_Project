@@ -1,8 +1,9 @@
 package com.leverx.blog.controller;
 
+import com.leverx.blog.exception.auth.NoCredentialsException;
 import com.leverx.blog.model.dto.ArticleDto;
 import com.leverx.blog.model.dto.ArticlePageDto;
-import com.leverx.blog.model.dto.RequestAddArticleDto;
+import com.leverx.blog.model.dto.RequestArticleDto;
 import com.leverx.blog.model.entity.*;
 import com.leverx.blog.service.ArticleService;
 import com.leverx.blog.service.TagService;
@@ -12,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +30,7 @@ public class ArticleController {
 
     //TODO add method returning User, replace userDto
     @PostMapping(value = "/articles")
-    public void createArticle(@RequestBody RequestAddArticleDto addArticle, Principal principal) {
+    public void createArticle(@RequestBody RequestArticleDto addArticle, Principal principal) {
         User currentUser = modelMapper
                 .map(userService.findPresentUserDto(principal.getName()), User.class);
         currentUser.setUserStatus(UserStatus.ACTIVATED);
@@ -52,6 +54,7 @@ public class ArticleController {
         return tags;
     }
 
+    //TODO parameters
     @GetMapping("/articles")
     public ArticlePageDto getArticlesOnPage(@RequestParam Integer page,
                                             @RequestParam Integer pageLimit) {
@@ -67,6 +70,23 @@ public class ArticleController {
                 .build();
     }
 
+    @PutMapping("/articles/{id}")
+    public void changeArticle(@PathVariable("id") Integer id,
+                              @RequestBody RequestArticleDto articleDto,
+                              Principal principal) {
+        User currentUser = modelMapper
+                .map(userService.findPresentUserDto(principal.getName()), User.class);
+        Article article = articleService.getArticle(id);
+        if (!currentUser.getId().equals(article.getUser().getId())) {
+            throw new NoCredentialsException("no credentials");
+        }
+        article.setTitle(articleDto.getTitle());
+        article.setText(articleDto.getText());
+        article.setStatus(articleDto.getStatus());
+        article.setChangingDate(LocalDate.now());
+        article.setTags(getTags(articleDto.getTags()));
+        articleService.updateArticle(article);
+    }
 
 
 }

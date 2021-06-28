@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class RequestAddArticleDto {
+public class RequestArticleDto {
     private String title;
     private String text;
     private ArticleStatus status;
