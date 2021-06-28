@@ -37,10 +37,12 @@ public class User {
     @Column(name = "registration_date")
     private LocalDate registrationDate;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @EqualsAndHashCode.Exclude
     private Set<Comment> comments;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @EqualsAndHashCode.Exclude
     private Set<Article> articles;
 
     @PrePersist
