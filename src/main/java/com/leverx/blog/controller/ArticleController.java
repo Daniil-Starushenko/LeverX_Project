@@ -88,5 +88,32 @@ public class ArticleController {
         articleService.updateArticle(article);
     }
 
+    @GetMapping("/my")
+    public ArticlePageDto getUsersArticles(@RequestParam Integer page,
+                                           @RequestParam Integer pageLimit,
+                                           Principal principal) {
+        User currentUser = modelMapper
+                .map(userService.findPresentUserDto(principal.getName()), User.class);
+        List<ArticleDto> articles = articleService.findUsersArticlesOnPage(page, pageLimit, currentUser).stream()
+                .map(article -> modelMapper.map(article, ArticleDto.class))
+                .collect(Collectors.toList());
+        long totalRecords = articleService.countUsersArticles(currentUser);
+        return ArticlePageDto.builder()
+                .page(page)
+                .pageLimit(pageLimit)
+                .totalRecords(totalRecords)
+                .articles(articles)
+                .build();
+    }
 
+    @DeleteMapping("/articles/{id}")
+    public void deleteArticle(@PathVariable("id") Integer id, Principal principal) {
+        User currentUser = modelMapper
+                .map(userService.findPresentUserDto(principal.getName()), User.class);
+        Article article = articleService.getArticle(id);
+        if (!currentUser.getId().equals(article.getUser().getId())) {
+            throw new NoCredentialsException("no credentials");
+        }
+        articleService.deleteArticle(id);
+    }
 }
