@@ -28,12 +28,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(readOnly = true)
-    public Comment saveComment(Comment comment) {
-        return null;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public Comment findByArticleIdAndCommentId(Integer articleId, Integer commentId) {
         log.info("try to find comment in article");
         return commentRepository.findByArticleIdAndId(articleId, commentId)

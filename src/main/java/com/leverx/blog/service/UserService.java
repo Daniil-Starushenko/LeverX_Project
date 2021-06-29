@@ -24,12 +24,4 @@ public interface UserService {
 
     String changePasswordAndGenerateJwt(Integer userId, String newPassword);
 
-    User updateUser(User user, UserDto userDto);
-
-    void deleteUser(User user);
-
-    boolean isActiveUser(Principal principal);
-
-    Optional<User> findPresentUser(Long userId);
-
 }

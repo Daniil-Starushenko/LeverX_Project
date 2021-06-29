@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.util.Optional;
 
 @Slf4j
@@ -74,11 +73,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findPresentUser(Long userId) {
-        return Optional.empty();
-    }
-
-    @Override
     public User saveUser(User user) {
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setEmail(user.getEmail());
@@ -88,19 +82,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user, UserDto userDto) {
-        return null;
-    }
-
-    @Override
     public User updateUserStatus(User user, UserStatus status) {
         user.setUserStatus(status);
         return userRepository.save(user);
-    }
-
-    @Override
-    public void deleteUser(User user) {
-
     }
 
     @Override
@@ -111,11 +95,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isActiveUser(Principal principal) {
-        return false;
-    }
-
-    @Override
     public String changePasswordAndGenerateJwt(Integer userId, String newPassword) {
         log.info("Change password for user: {}", userId);
 
@@ -123,8 +102,7 @@ public class UserServiceImpl implements UserService {
         User updateUser = userRepository.getOne(userId);
         updateUser.setPassword(hashedNewPassword);
         userRepository.save(updateUser);
-        String JwtForUser = jwtProvider.createToken(updateUser.getEmail(), updateUser.getUserStatus());
 
-        return JwtForUser;
+        return jwtProvider.createToken(updateUser.getEmail(), updateUser.getUserStatus());
     }
 }

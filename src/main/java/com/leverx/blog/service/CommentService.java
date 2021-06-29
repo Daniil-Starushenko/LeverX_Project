@@ -7,8 +7,6 @@ import org.springframework.data.domain.Page;
 
 public interface CommentService {
 
-    Comment saveComment(Comment comment);
-
     Comment saveComment(Article articleToComment, User commentingUser, String message);
 
     Comment findCommentById(Integer id);
