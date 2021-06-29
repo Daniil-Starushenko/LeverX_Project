@@ -124,10 +124,11 @@ public class ArticleController {
         List<ArticleDto> articles = articleService.findArticlesByTags(tags, page, pageLimit).stream()
                 .map(article -> modelMapper.map(article, ArticleDto.class))
                 .collect(Collectors.toList());
+        long totalRecords = articleService.countByTags(tags);
         return ArticlePageDto.builder()
                 .page(page)
                 .pageLimit(pageLimit)
-                //.totalRecords(totalRecords)
+                .totalRecords(totalRecords)
                 .articles(articles)
                 .build();
     }

@@ -24,6 +24,8 @@ public interface ArticleService {
 
     long countUsersArticles(User user);
 
+    long countByTags(List<TagValue> tags);
+
     void updateArticle(Article article);
 
     void deleteArticle(Integer id);

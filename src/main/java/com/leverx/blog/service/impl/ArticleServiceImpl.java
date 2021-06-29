@@ -93,6 +93,16 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public long countByTags(List<TagValue> tags) {
+        List<Tag> tagList = new ArrayList<>();
+        tags.forEach(
+                tagValue -> tagList.add(tagRepository.getTagByTagValue(tagValue))
+        );
+        return articleRepository.countDistinctByTagsInAndStatus(tagList, ArticleStatus.PUBLIC);
+    }
+
+    @Override
     public void updateArticle(Article article) {
         articleRepository.save(article);
     }
