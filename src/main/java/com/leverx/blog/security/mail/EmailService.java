@@ -33,7 +33,7 @@ public class EmailService implements EmailSender{
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your email");
-            helper.setFrom(mailFrom); //TODO string constant
+            helper.setFrom(mailFrom);
             javaMailSender.send(mimeMessage);
 
         } catch (MessagingException e) {

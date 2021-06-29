@@ -29,7 +29,6 @@ public class ArticleController {
     private UserService userService;
     private TagService tagService;
 
-    //TODO add method returning User, replace userDto
     @PostMapping(value = "/articles")
     public void createArticle(@RequestBody RequestArticleDto addArticle, Principal principal) {
         User currentUser = modelMapper
@@ -58,8 +57,8 @@ public class ArticleController {
         return tags;
     }
 
-    //TODO parameters
-    @GetMapping("/articles")
+
+    @GetMapping("/articles/show")
     public ArticlePageDto getArticlesOnPage(@RequestParam Integer page,
                                             @RequestParam Integer pageLimit) {
         List<ArticleDto> articles = articleService.findArticlesOnPage(page, pageLimit).stream()

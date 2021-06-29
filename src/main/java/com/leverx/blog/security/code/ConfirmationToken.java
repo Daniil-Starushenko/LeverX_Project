@@ -10,7 +10,6 @@ import org.springframework.data.redis.core.index.Indexed;
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
-//TODO lombok annotations
 
 @Data
 @RedisHash("AuthorizationToken")
