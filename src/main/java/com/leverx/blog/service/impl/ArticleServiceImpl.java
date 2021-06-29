@@ -63,7 +63,7 @@ public class ArticleServiceImpl implements ArticleService {
         PageRequest pageRequest = PageRequest.of(page - 1,
                 pageLimit);
 
-        return articleRepository.findDistinctByTagsIn(tags, pageRequest);
+        return articleRepository.findDistinctByTagsInAndStatus(tags, pageRequest, ArticleStatus.PUBLIC);
     }
 
     private void checkPages(int pageNumber, int pageLimit) {
