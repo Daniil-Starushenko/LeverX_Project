@@ -4,6 +4,7 @@ import com.leverx.blog.exception.auth.NoCredentialsException;
 import com.leverx.blog.model.dto.ArticleDto;
 import com.leverx.blog.model.dto.ArticlePageDto;
 import com.leverx.blog.model.dto.RequestArticleDto;
+import com.leverx.blog.model.dto.TagCloudDtoResponse;
 import com.leverx.blog.model.entity.*;
 import com.leverx.blog.service.ArticleService;
 import com.leverx.blog.service.TagService;
@@ -47,10 +48,13 @@ public class ArticleController {
 
     private Set<Tag> getTags(List<TagValue> tagValueList) {
         Set<Tag> tags = new HashSet<>();
-        for (TagValue tagValue: tagValueList) {
-            Tag tag = tagService.getByTagValue(tagValue);
-            tags.add(tag);
-        }
+//        for (TagValue tagValue: tagValueList) {
+//            Tag tag = tagService.getByTagValue(tagValue);
+//            tags.add(tag);
+//        }
+        tagValueList.forEach(
+                tagValue -> tags.add(tagService.getByTagValue(tagValue))
+        );
         return tags;
     }
 
@@ -131,6 +135,11 @@ public class ArticleController {
                 .totalRecords(totalRecords)
                 .articles(articles)
                 .build();
+    }
+
+    @GetMapping("/tags-cloud")
+    public TagCloudDtoResponse tagCloud() {
+    return null;
     }
 
 }

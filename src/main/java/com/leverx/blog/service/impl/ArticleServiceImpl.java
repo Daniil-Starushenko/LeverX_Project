@@ -103,6 +103,12 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public long countArticlesByEachTag() {
+        List<Tag> tags = tagRepository.findAll();
+        return 1;
+    }
+
+    @Override
     public void updateArticle(Article article) {
         articleRepository.save(article);
     }

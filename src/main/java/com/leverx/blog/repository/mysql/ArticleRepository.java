@@ -21,8 +21,6 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
     Page<Article> findAllByUser(User user, Pageable pageable);
 
-    Page<Article> findAllByTags(Tag tag, Pageable pageable);
-
     long countAllByStatus(ArticleStatus status);
 
     long countAllByUser(User user);
@@ -30,4 +28,6 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
     long countDistinctByTagsInAndStatus(List<Tag> tags, ArticleStatus status);
 
     Page<Article> findDistinctByTagsInAndStatus(List<Tag> tags, Pageable pageable, ArticleStatus status);
+
+    long countAllByTagsAndStatus(Tag tag, ArticleStatus articleStatus);
 }
