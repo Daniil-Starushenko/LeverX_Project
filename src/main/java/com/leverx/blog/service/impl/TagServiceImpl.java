@@ -1,5 +1,6 @@
 package com.leverx.blog.service.impl;
 
+import com.leverx.blog.exception.entity.EntityNotFoundException;
 import com.leverx.blog.model.entity.Tag;
 import com.leverx.blog.model.entity.TagValue;
 import com.leverx.blog.repository.mysql.TagRepository;

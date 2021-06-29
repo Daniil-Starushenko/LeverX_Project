@@ -116,4 +116,20 @@ public class ArticleController {
         }
         articleService.deleteArticle(id);
     }
+
+    @GetMapping("/articles/tags")
+    public ArticlePageDto getArticlesByTags(@RequestParam List<TagValue> tags,
+                                            @RequestParam Integer page,
+                                            @RequestParam Integer pageLimit) {
+        List<ArticleDto> articles = articleService.findArticlesByTags(tags, page, pageLimit).stream()
+                .map(article -> modelMapper.map(article, ArticleDto.class))
+                .collect(Collectors.toList());
+        return ArticlePageDto.builder()
+                .page(page)
+                .pageLimit(pageLimit)
+                //.totalRecords(totalRecords)
+                .articles(articles)
+                .build();
+    }
+
 }

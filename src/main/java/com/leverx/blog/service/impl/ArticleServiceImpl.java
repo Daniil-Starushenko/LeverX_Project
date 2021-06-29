@@ -2,10 +2,9 @@ package com.leverx.blog.service.impl;
 
 import com.leverx.blog.exception.entity.EntityNotFoundException;
 import com.leverx.blog.exception.entity.InvalidateArgumentException;
-import com.leverx.blog.model.entity.Article;
-import com.leverx.blog.model.entity.ArticleStatus;
-import com.leverx.blog.model.entity.User;
+import com.leverx.blog.model.entity.*;
 import com.leverx.blog.repository.mysql.ArticleRepository;
+import com.leverx.blog.repository.mysql.TagRepository;
 import com.leverx.blog.service.ArticleService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +13,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Slf4j
 @Service
 @Transactional
@@ -21,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ArticleServiceImpl implements ArticleService {
 
     private ArticleRepository articleRepository;
+    private TagRepository tagRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -28,13 +33,6 @@ public class ArticleServiceImpl implements ArticleService {
         log.info("try to find article with id {}", id);
         return articleRepository.findArticleById(id)
                 .orElseThrow(() -> new EntityNotFoundException("article with id: " + id + "is not found"));
-    }
-
-
-    @Override
-    public Article saveArticle(Article article) {
-        log.info("save article with id: {}", article.getId());
-        return articleRepository.save(article);
     }
 
     @Override
@@ -55,6 +53,19 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepository.findAllByUser(user, pageRequest);
     }
 
+    @Override
+    public Page<Article> findArticlesByTags(List<TagValue> tagValues, Integer page, Integer pageLimit) {
+        List<Tag> tags = new ArrayList<>();
+        tagValues.forEach(
+                tagValue -> tags.add(tagRepository.getTagByTagValue(tagValue))
+        );
+        checkPages(page, pageLimit);
+        PageRequest pageRequest = PageRequest.of(page - 1,
+                pageLimit);
+
+        return articleRepository.findDistinctByTagsIn(tags, pageRequest);
+    }
+
     private void checkPages(int pageNumber, int pageLimit) {
         if (pageNumber <= 0 || pageLimit <= 0 || pageLimit > 10) {
             throw new InvalidateArgumentException("Page starts from 1. Provided: "
@@ -63,7 +74,11 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
-
+    @Override
+    public Article saveArticle(Article article) {
+        log.info("save article with id: {}", article.getId());
+        return articleRepository.save(article);
+    }
 
     @Override
     @Transactional(readOnly = true)
