@@ -32,7 +32,7 @@ public class ArticleServiceImpl implements ArticleService {
     public Article getArticle(Integer id) {
         log.info("try to find article with id {}", id);
         return articleRepository.findArticleById(id)
-                .orElseThrow(() -> new EntityNotFoundException("article with id: " + id + "is not found"));
+                .orElseThrow(() -> new EntityNotFoundException("article with id: " + id + " is not found"));
     }
 
     @Override
