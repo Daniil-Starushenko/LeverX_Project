@@ -38,7 +38,7 @@ public class CommentController {
         commentService.saveComment(article, currentUser, commentDto.getMessage());
     }
 
-    @GetMapping("/articles/{articleId}/comments/{commentId}")
+    @GetMapping("/articles/comment/{articleId}/comments/{commentId}")
     public CommentDto showComment(@PathVariable("articleId") Integer articleId,
                                   @PathVariable("commentId") Integer commentId) {
         return modelMapper.map(
